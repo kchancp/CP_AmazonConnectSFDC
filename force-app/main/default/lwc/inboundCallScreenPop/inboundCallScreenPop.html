@@ -1,0 +1,88 @@
+<template>
+  <div class="slds-page-header">
+    <div class="slds-page-header__row">
+      <div class="slds-page-header__col-title">
+        <div class="slds-media">
+          <div class="slds-media__body">
+            <div class="slds-page-header__name">
+              <div class="slds-page-header__name-title">
+                <div
+                  class="slds-page-header__title slds-text-title_caps slds-truncate"
+                  title="Inbound Call">
+                  Inbound Call -- Caller Number:
+                  <span
+                    class="slds-p-horizontal_x-small slds-text-color_success slds-text-title_bold">
+                    {phoneNumber}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <lightning-card title="Contacts" icon-name="standard:contact">
+    <lightning-button
+      label="New Case"
+      slot="actions"
+      onclick={handleNewCase}></lightning-button>
+    <lightning-layout>
+      <lightning-layout-item size="10"></lightning-layout-item>
+      <lightning-layout-item size="2" padding="horizontal-medium">
+        <div onkeyup={handleContactSearch}>
+          <lightning-input
+            name="Contact Search"
+            label="Search"
+            type="search"
+            value={valueContactSearch}
+            min-length="3"
+            placeholder="Search Contact"
+            variant="label-hidden"
+            class="slds-p-bottom_medium"></lightning-input>
+        </div>
+      </lightning-layout-item>
+    </lightning-layout>
+    <template if:true={contacts}>
+      <lightning-datatable
+        data={contacts}
+        columns={contactTableColumns}
+        key-field="Id"
+        onrowselection={handleContactRowSelection}
+        max-row-selection="1"
+        errors={contactError}>
+      </lightning-datatable>
+    </template>
+    <template if:false={contacts}>
+      <div
+        class="slds-text-align_center slds-text-heading_small slds-text-color_error">
+        No contacts found.
+      </div>
+    </template>
+  </lightning-card>
+
+  <div class="slds-p-top_large">
+    <lightning-card title="Open Cases" icon-name="standard:case">
+      <lightning-button
+        label="Link Call to Case"
+        slot="actions"
+        onclick={handleLinkCallToCase}></lightning-button>
+      <template if:true={openCases}>
+        <lightning-datatable
+          data={openCases}
+          columns={caseTableColumns}
+          key-field="Id"
+          onrowselection={handleCaseRowSelection}
+          max-row-selection="1"
+          errors={caseError}>
+        </lightning-datatable>
+      </template>
+      <template if:false={openCases}>
+        <div
+          class="slds-text-align_center slds-text-heading_small slds-text-color_error">
+          No recent cases found.
+        </div>
+      </template>
+    </lightning-card>
+  </div>
+</template>
