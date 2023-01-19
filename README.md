@@ -1,2 +1,3 @@
 # CP_AmazonConnectSFDC
-Code samples for Amazon Connect integration with SFDC
+
+Code samples from the Amazon Connect with Salesforce blog series.
